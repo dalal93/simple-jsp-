@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script type="text/javascript" src="jquery-1.9.1.js"></script>
+       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+ <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
+      <script type="text/javascript">
+$(document).ready(function(){
+     $('#Email').blur(function(){
+ 
+         var Username = $(this).val(); 
+                  var UsernameAvailResult = $('#username_avail_result');  
+            UsernameAvailResult.html('Loading..'); 
+                 $.get('verify',{user:Username},function(responseText) { 
+               
+   if (responseText==="false"){
+                    UsernameAvailResult.html('<span style="color:red">The email already taken</span>');
+                    document.getElementById('reg').style.display='none';
+                }
+               else if(responseText="true"){
+                    UsernameAvailResult.html('<span style="color:green">The email is available</span>');
+                            document.getElementById('reg').style.display='block';
+       
+        }
+             
+                else{
+                    alert('Problem with'+responseText+' sql query');
+                }
+            
+            });  
+         }); 
+          }); 
+    
+    
+    </script>
+    </head>
+    <body>
+               <h1>already a member?<br> log in </h1>
+       <form method="post" action="Log">
+           Email <input type="email" name="Email" required>
+           Password <input type="password" name="Password" required>
+           <input type="submit" value="Log in" name="Log">
+        </form>
+                <h1>your first time here ?<br> register </h1>
+          <form method="post" action="Register">
+             Name <input type="text" name="Name" required>
+             Email <input type="email" id="Email" name="Email" required>
+             Password <input type="password" name="Password" required>
+            <div  style="display:block; width:180px;" id="username_avail_result"></div>
+           <input type="submit" id="reg" value="register" name="register">
+        </form>
+    </body>
+</html>
